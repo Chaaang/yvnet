@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "747626756932",
+    "project_id": "yvnet-2d183",
+    "storage_bucket": "yvnet-2d183.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747626756932:android:ef66d876cc77da92b93511",
+        "android_client_info": {
+          "package_name": "com.example.yvnet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNgrjCPw-raK49X7nEGx-qJ32JI8Dp4u8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
