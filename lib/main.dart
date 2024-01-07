@@ -9,7 +9,7 @@ void main() async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // NotificationServices().initNotifications();
   // NotificationServices().initLocationNotification();
-  //await FirebaseMessaging.instance.getInitialMessage();
+  //await FirebaseMessaging.instance.getInitialMessage(); 
   runApp(const MyApp());
 }
 
