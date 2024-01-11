@@ -33,6 +33,6 @@ void progressIndication(context){
         return Colors.yellow;
       default:
         // If the color name is not recognized, return a default color
-        return Colors.black;
+        return Colors.red;
     }
     }
