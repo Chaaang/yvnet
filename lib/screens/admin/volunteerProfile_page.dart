@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class VolunteerProfile extends StatefulWidget {
   final String image;
   final String firstName;
@@ -102,7 +104,12 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
               Text('Relationship', style: TextStyle(color: Colors.amber[400], fontWeight: FontWeight.bold),),
               Text(widget.contactRelationship,style: const TextStyle(fontSize: 20)),
               Text('Contact Number', style: TextStyle(color: Colors.amber[400], fontWeight: FontWeight.bold),),
-              Text(widget.contactNumber,style: const TextStyle(fontSize: 20)),
+              GestureDetector(
+                onTap: () async{
+                  Uri dialnumber = Uri(scheme: 'tel', path: '${widget.contactNumber}');
+                  await launchUrl(dialnumber);
+                },
+                child: Text(widget.contactNumber,style: const TextStyle(fontSize: 20))),
               
               
               Text('Action', style: TextStyle(color: Colors.amber[400], fontWeight: FontWeight.bold),),
