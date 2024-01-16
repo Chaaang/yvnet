@@ -63,8 +63,8 @@ class _LoginPageState extends State<LoginPage> {
                     const Text("Be a", 
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               
-                    const Text("VOLUNTEER", 
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.yellow),),
+                    Text("VOLUNTEER", 
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.amber[400]),),
               
                     const Text("The smallest act of kindess is worth more than the grandest intention.", 
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.w900),),

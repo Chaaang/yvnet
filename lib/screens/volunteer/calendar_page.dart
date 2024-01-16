@@ -99,7 +99,7 @@ class _CalenderViewState extends State<CalenderView> {
                 return SfCalendar(
                   dataSource: MeetingDataSource(snapshot.data),
                   monthViewSettings: const MonthViewSettings(
-                    appointmentDisplayMode: MonthAppointmentDisplayMode.indicator,
+                    appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
                     showAgenda: true),
                   view: CalendarView.month,
                   onTap: (CalendarTapDetails details) {

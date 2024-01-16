@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:yvnet/components/mybuttons.dart';
 import 'package:intl/intl.dart';
 import 'package:yvnet/helper_function/helper_function.dart';
+import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -32,9 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final listItem = ['Male','Female'];
+  final listItem = ['Male','Female','Non-binary','Transgender','Cisgender','Prefer not to say'];
   String valueChoose = 'Male';
-  //String value = 'Male';
+  String contactNumber = '';
+
+  PhoneContact? _phoneContact;
   
 
 
@@ -97,23 +100,19 @@ class _RegisterPageState extends State<RegisterPage> {
   }
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    // firstNameController.dispose();
-    // lastNameController.dispose();
-    // emailController.dispose();
-    // passwordController.dispose();
-    // confirmpasswordController.dispose();
-    // dobController.dispose();
-    // genderController.dispose();
-    // phoneNumberController.dispose();
-    // addressController.dispose();
-    // contactNameController.dispose();
-    // contactRelationshipController.dispose();
-    // contactNameController.dispose();
-    super.dispose();
-  }
+  Future<void> pickContact() async {
+    bool permission = await FlutterContactPicker.requestPermission();
+
+    if(permission){
+      if(await FlutterContactPicker.hasPermission()){
+        _phoneContact = await FlutterContactPicker.pickPhoneContact();
+        setState(() {
+          contactNumber = _phoneContact!.phoneNumber!.number!;
+          contactNumberController.text = contactNumber;
+        });
+      }
+    }
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -324,9 +323,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     items:listItem.map((item) => DropdownMenuItem(
                           value: item,
                     child: Center(child: Text(item))
-                )).toList(), 
+                                  )).toList(), 
                     onChanged: (value) {
-                setState(() {
+                                  setState(() {
                   valueChoose = value!;
                   if(valueChoose == 'Male'){
                     genderController.text = 'Male';
@@ -335,10 +334,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
                   print(genderController.text);
                   
-                }); 
+                                  }); 
                     },
-                ),
-              ),
+                                  ),
+                                ),
 
 
               Divider(),
@@ -397,7 +396,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   borderRadius: BorderRadius.circular(12)),
                   hintText: 'Contact Number',
                   hintStyle: const TextStyle( fontSize: 12),
-                  prefixIcon: const Icon(Icons.phone_android),
+                  prefixIcon: InkWell(
+                    onTap:() async{
+                      await pickContact();
+                    } ,
+                    child: const Icon(Icons.phone_android)),
                 ),
                 validator: (value) {
                   if(value!.isEmpty){

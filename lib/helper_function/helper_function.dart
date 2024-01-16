@@ -30,7 +30,7 @@ void progressIndication(context){
       case 'red':
         return Colors.red;
       case 'yellow':
-        return Colors.yellow;
+        return Color(0xFFFFCA28);
       default:
         // If the color name is not recognized, return a default color
         return Colors.red;
