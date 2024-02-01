@@ -30,10 +30,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController contactNameController             = TextEditingController();
   final TextEditingController contactRelationshipController     = TextEditingController();
   final TextEditingController contactNumberController           = TextEditingController();
+  final TextEditingController otherGenderController             = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  final listItem = ['Male','Female','Non-binary','Transgender','Cisgender','Prefer not to say'];
+  final listItem = ['Male','Female'];
   String valueChoose = 'Male';
   String contactNumber = '';
 
@@ -85,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
             .set({
               'firstName'  : firstNameController.text,
               'lastName'   : lastNameController.text,
-              'gender'     : genderController.text,
+              'gender'     : genderController.text == 'Other' ? genderController.text = otherGenderController.text : genderController.text,
               'dob'        : dobController.text,
               'email'      : emailController.text,
               'isAdmin'    : false,
@@ -315,31 +316,79 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
               
                         const SizedBox(height: 15), 
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton(
-                    hint:  Center(child: Text(genderController.text, textAlign: TextAlign.center,)),
-                    isExpanded: true, 
-                    value: valueChoose,
-                    items:listItem.map((item) => DropdownMenuItem(
-                          value: item,
-                    child: Center(child: Text(item))
-                                  )).toList(), 
-                    onChanged: (value) {
-                                  setState(() {
-                  valueChoose = value!;
-                  if(valueChoose == 'Male'){
-                    genderController.text = 'Male';
-                  }else{
-                    genderController.text = 'Female';
-                  }
-                  print(genderController.text);
-                  
-                                  }); 
+                // DropdownButtonHideUnderline(
+                //     child: DropdownButton(
+                //     hint:  Center(child: Text(genderController.text, textAlign: TextAlign.center,)),
+                //     isExpanded: true, 
+                //     value: valueChoose,
+                //     items:listItem.map((item) => DropdownMenuItem(
+                //           value: item,
+                //     child: Center(child: Text(item))
+                //                   )).toList(), 
+                //     onChanged: (value) {
+                //                   setState(() {
+                //   valueChoose = value!;
+                //   if(valueChoose == 'Male'){
+                //     genderController.text = 'Male';
+                //   }else{
+                //     genderController.text = 'Female';
+                //   }
+                //                   }); 
+                //     },
+                //                   ),
+                // ),
+              Text('Sex', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),),
+              Row(
+                children: [
+                  Radio(value: 'Male', 
+                        groupValue: valueChoose, 
+                        onChanged: (value) {
+                          setState(() {
+                            valueChoose = value!;
+                            print(valueChoose);
+                          });
+                        },),
+                  Text('Male')
+                ],
+              ),
+              Row(
+                children: [
+                  Radio(value: 'Female', 
+                        groupValue: valueChoose, 
+                        onChanged: (value) {
+                          setState(() {
+                            valueChoose = value!;
+                            print(valueChoose);
+                          });
+                        },),
+                  Text('Female'),
+                ],
+              ),
+              Row(
+                children: [
+                  Radio(value: 'Other', 
+                        groupValue: valueChoose, 
+                        onChanged: (value) {
+                          setState(() {
+                            valueChoose = value!;
+                          });
+                        },),
+                  Text('Other:'),
+                  SizedBox(width: 10,),
+                  Expanded(child: TextFormField(
+                    controller: otherGenderController,
+                    validator: (value) {
+                     if(value!.isEmpty && valueChoose == 'Other'){
+                      return 'Required';
+                     }
+                      return null;
                     },
-                                  ),
-                                ),
+                  ))
 
-
+                ],
+              ),
+               
+              SizedBox(height: 15,),
               Divider(),
 
               Text('Emergency Contact',
@@ -419,9 +468,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     //Login Button
                     const SizedBox(height: 40),
                     MyButton(text: 'Register', onTap: () {
+                       print(genderController.text);
                       if(_formKey.currentState!.validate()){
+                      if(valueChoose == 'Other'){
+                        setState(() {
+                          genderController.text = otherGenderController.text;
+                        });
+                      }                        
                           registerUser();
-                            //print(genderController.text);
+
                       }
                       
                     },),
